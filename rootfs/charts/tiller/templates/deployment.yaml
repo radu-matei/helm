@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    draft: {{ default "draft-app" .Values.draft }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      annotations:
+        buildID: {{ .Values.buildID }}
+      labels:
+        draft: {{ default "draft-app" .Values.draft }}
+        app: {{ template "fullname" . }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        securityContext:
+          capabilities:
+            privileged: true
+            add:
+              - SYS_PTRACE
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+        env:
+        - name: TILLER_NAMESPACE
+          value: "default"
+        - name: TILLER_HISTORY_MAX
+          value: "0"
+
+        ports:
+        - containerPort: {{ .Values.ports.tiller }}
+        - containerPort: {{ .Values.ports.http }}
+        - containerPort: {{ .Values.ports.debug }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}

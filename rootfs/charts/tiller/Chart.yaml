@@ -1,0 +1,4 @@
+apiVersion: v1
+description: A Helm chart for Tiller
+name: tiller
+version: v0.1.0

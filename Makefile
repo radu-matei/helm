@@ -13,6 +13,7 @@ TAGS      :=
 TESTS     := .
 TESTFLAGS :=
 LDFLAGS   := -w -s
+DFLAGS 	  :=  -s
 GOFLAGS   :=
 BINDIR    := $(CURDIR)/bin
 BINARIES  := helm tiller
@@ -55,6 +56,13 @@ check-docker:
 	  echo "Missing \`docker\` client which is required for development"; \
 	  exit 2; \
 	fi
+
+
+.PHONY: docker-debug
+docker-debug: BINDIR = ./rootfs
+docker-debug:
+	GOOS=linux GOARCH=amd64 $(GO) build -o $(BINDIR)/tiller k8s.io/helm/cmd/tiller
+
 
 .PHONY: docker-binary
 docker-binary: BINDIR = ./rootfs

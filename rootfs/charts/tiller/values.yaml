@@ -1,0 +1,24 @@
+replicaCount: 1
+image:
+  pullPolicy: IfNotPresent
+  # repository: injected by Draft
+  # tag: injected by Draft 
+
+liveness:
+  path: /liveness
+readiness:
+  path: /readiness
+ports:
+  tiller: 44134
+  http: 44135
+  debug: 2345
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+# draft: injected by Draft
+# buildID: injected by Draft

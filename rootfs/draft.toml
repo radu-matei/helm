@@ -1,0 +1,8 @@
+[environments]
+  [environments.development]
+    name = "tiller-debug"
+    namespace = "default"
+    override-ports = ["2345:2345", "44134:44134", "44135:44135"]
+    dockerfile = "Dockerfile.tiller.debug"
+    custom-tags = ["canary"]
+    chart = "tiller"

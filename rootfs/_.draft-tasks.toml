@@ -1,0 +1,2 @@
+[pre-up]
+make = "make docker-debug -C ../"

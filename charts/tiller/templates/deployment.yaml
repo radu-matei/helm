@@ -35,5 +35,4 @@ spec:
         - containerPort: {{ .Values.ports.tiller }}
         - containerPort: {{ .Values.ports.http }}
         - containerPort: {{ .Values.ports.debug }}
-        resources:
-{{ toYaml .Values.resources | indent 12 }}
+
